@@ -102,4 +102,4 @@ Content-Type: text/plain; charset=utf-8
 
 
 ## TODO
-- [x] implement an API Gateway Proxy request/response handler
+- [x] ~implement an API Gateway Proxy request/response handler~
