@@ -8,3 +8,4 @@ RUN apk add --no-cache curl && \
 FROM fastfib:latest
 COPY --from=rie-image /aws-lambda-rie /usr/local/bin/
 ENTRYPOINT ["aws-lambda-rie", "/app"]
+# CMD ["--apigw"]

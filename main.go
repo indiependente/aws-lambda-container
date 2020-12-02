@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -17,7 +18,12 @@ func main() {
 }
 
 func run() error {
-	if len(os.Args) > 1 && os.Args[1] == "--test" {
+	if len(os.Args) == 1 {
+		lambda.Start(handler)
+		return nil
+	}
+	switch os.Args[1] {
+	case "--test":
 		n, err := strconv.ParseInt(os.Args[2], 10, 64)
 		if err != nil {
 			return err
@@ -27,8 +33,10 @@ func run() error {
 			return err
 		}
 		fmt.Println(fibN)
-	} else {
-		lambda.Start(handler)
+	case "--apigw":
+		lambda.Start(apiGWHandler)
+	default:
+		return errors.New("unknown flag")
 	}
 	return nil
 }

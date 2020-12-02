@@ -72,5 +72,34 @@ Response:
 {"result":13}
 ```
 
+## API Gateway Proxy Request/Response
+
+Usually lambdas are sitting behind an API gateway or a load balancer, for that reason the code has to use the right AWS event structure.
+
+In this example I've added an API gawaway handler. It can be used by passing the `--apigw` flag when running the binary.
+
+I've added a `CMD` in the [Dockerfile.test](./Dockerfile.test) file, that can be commented out to test this type of event.
+
+In order to test the API gateway handler, we need to send an API gateway JSON event.
+I've added an example one called [apigw_request.json](./apigw_request.json) to this repo, that can be used to test locally.
+
+Request:
+```
+curl -i -X POST localhost:9000/2015-03-31/functions/function/invocations \
+  -H "Content-Type: application/json" \
+  --data-binary "@apigw_request.json"
+```
+
+Response:
+```
+HTTP/1.1 200 OK
+Date: Wed, 02 Dec 2020 18:44:33 GMT
+Content-Length: 115
+Content-Type: text/plain; charset=utf-8
+
+{"statusCode":200,"headers":{"Content-Type":"application/json"},"multiValueHeaders":null,"body":"{\"result\":233}"}
+```
+
+
 ## TODO
-- [ ] implement an API Gateway Proxy request/response handler
+- [x] implement an API Gateway Proxy request/response handler
